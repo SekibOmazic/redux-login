@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import { syncHistoryWithStore } from 'react-router-redux'
+import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import { browserHistory } from 'react-router'
 
 import thunkMiddleware from 'redux-thunk'
@@ -28,7 +28,7 @@ const composeEnhancers =
       }) : compose
 
 const enhancer = composeEnhancers(
-    applyMiddleware(thunkMiddleware),
+    applyMiddleware(thunkMiddleware, routerMiddleware(browserHistory)),
     // other store enhancers if any
   )
 

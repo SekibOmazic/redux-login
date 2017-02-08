@@ -1,8 +1,7 @@
 import * as actions from './index'
 import * as api from '../api/auth-api'
 
-import { browserHistory } from 'react-router'
-//import { push } from 'react-router-redux'
+import { push } from 'react-router-redux'
 
 const sendingRequest = (actionType) => ({
   type: actionType
@@ -18,14 +17,13 @@ const loginSuccessful = (user) => ({
   user
 })
 
-// TODO: check if this is the proper place to redirect after login
+// TODO: use redux-observable, it's cool
 export const loginUser = (username, password) => dispatch => {
   dispatch(sendingRequest(actions.LOGIN))
   return api.loginWithCredentials(username, password)
     .then(user => {
       dispatch(loginSuccessful(user))
-      browserHistory.push('/dashboard')
-      //dispatch(push('/dashboard')) // didn't work
+      dispatch(push('/dashboard')) // handled by routerMiddleware
     })
     .catch(err => dispatch(loginFailed(err)))
 }
