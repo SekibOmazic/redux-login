@@ -3,7 +3,7 @@ import React from 'react'
 export default (props) =>
   (
     <div>
-      <p>Home</p>
+      <p>Home page - welcome</p>
       {props.children}
     </div>
   )

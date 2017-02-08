@@ -12,7 +12,6 @@ const validateLoginForm = (key, value, errors) => {
 
 const defaultAuth = {
   sendingRequest: false,
-  loggedIn: false,
   user: null,
   errors : null,
   credentials: {},
@@ -31,9 +30,7 @@ const authReducer = (state = defaultAuth, action) => {
     case actions.LOGIN:
       return {...state, sendingRequest: true}
     case actions.LOGIN_SUCCESSFUL:
-      const usr = {...state, sendingRequest: false, loggedIn: true, errors: {}, user: action.user}
-      console.log('LOGIN_SUCCESSFUL state after update', usr)
-      return usr
+      return {...state, sendingRequest: false, errors: {}, user: action.user}
     case actions.LOGIN_FAILURE:
       return {...state, sendingRequest: false, errors: {network: action.error.message}}
     default:
