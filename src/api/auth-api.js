@@ -6,12 +6,12 @@ import config from '../config'
  */
 export const loginWithCredentials = (username, password) => {
   const data = {username: username, password: password}
-  console.log('user', data, `${config.api.login}`)
 
   return axios.post(`${config.api.login}`, data)
               .then(response => response.data)
-/*
-  return axios.get(`${config.api.placeholder}`)
-              .then(response => response.data)
-*/
 }
+
+export const logout = () => (
+  axios.get(`${config.api.logout}`)
+       .then(response => response.data)
+)

@@ -10,6 +10,9 @@ import Login from './components/auth/Login'
 import { Provider } from 'react-redux'
 import store, { history } from './store'
 
+import './index.css'
+
+//TODO: need to prevent /login if user is logged in
 const requireAuth = (nextState, replace) => {
   let {auth} = store.getState()
 

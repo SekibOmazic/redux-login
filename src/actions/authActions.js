@@ -1,6 +1,9 @@
 import * as actions from './index'
 import * as api from '../api/auth-api'
 
+import { browserHistory } from 'react-router'
+//import { push } from 'react-router-redux'
+
 const sendingRequest = (actionType) => ({
   type: actionType
 })
@@ -15,12 +18,15 @@ const loginSuccessful = (user) => ({
   user
 })
 
+// TODO: check if this is the proper place to redirect after login
 export const loginUser = (username, password) => dispatch => {
-  console.log('login user action creator invoked', username, password)
   dispatch(sendingRequest(actions.LOGIN))
-
   return api.loginWithCredentials(username, password)
-    .then(user => dispatch(loginSuccessful(user)))
+    .then(user => {
+      dispatch(loginSuccessful(user))
+      browserHistory.push('/dashboard')
+      //dispatch(push('/dashboard')) // didn't work
+    })
     .catch(err => dispatch(loginFailed(err)))
 }
 
@@ -29,6 +35,23 @@ export const updateLoginForm = (key, value) => dispatch => {
 }
 
 
+const logoutFailed = (error) => ({
+  type: actions.LOGOUT_FAILURE,
+  error
+})
+
+const logoutSuccessful = () => ({
+  type: actions.LOGOUT_SUCCESSFUL
+})
+
+export const logout = () => dispatch => {
+  dispatch(sendingRequest(actions.LOGOUT))
+  dispatch(logoutSuccessful())
+
+  return api.logout()
+    .then(user => dispatch(logoutSuccessful()))
+    .catch(err => dispatch(logoutFailed(err)))
+}
 
 
 const registerFailed = (error) => ({

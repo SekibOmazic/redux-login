@@ -28,11 +28,16 @@ const authReducer = (state = defaultAuth, action) => {
         errors: validateLoginForm(action.key, action.value, state.errors)
       }
     case actions.LOGIN:
+    case actions.LOGOUT:
       return {...state, sendingRequest: true}
     case actions.LOGIN_SUCCESSFUL:
       return {...state, sendingRequest: false, errors: {}, user: action.user}
     case actions.LOGIN_FAILURE:
       return {...state, sendingRequest: false, errors: {network: action.error.message}}
+    case actions.LOGOUT_SUCCESSFUL:
+    case actions.LOGOUT_FAILURE:
+      return {...state, sendingRequest: false, errors: {}, user: null}
+
     default:
       return state
   }
